@@ -6,13 +6,13 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 20:46:33 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/04/15 21:19:23 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/04/23 00:54:06 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	count_nb(int n)
+static int	count_nb(int n)
 {
 	int	t;
 

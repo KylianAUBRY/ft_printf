@@ -5,164 +5,71 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 19:19:53 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/04/20 20:37:00 by kyaubry          ###   ########.fr       */
+/*   Created: 2023/04/24 01:07:29 by kyaubry           #+#    #+#             */
+/*   Updated: 2023/04/24 01:25:53 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
-int	ft_verif_2(const char *src, char c, t_chaine *chaine)
+void	ft_space(const char *src, t_chaine *chaine)
 {
-	int	i;
-
-	i = chaine->i - 1;
-	while (src[++i] && src[i] != c)
-	{
-		if (src[i] == '.' && (c == 'n' || c == 'c' || c == 's' || c == '%'))
-			return (0);
-		if (src[i] != '%' && c == '%')
-			return (0);
-	}
-	if (!src[i])
-		return (0);
-	return (1);
-}
-
-int	ft_verif(const char *src, char c, t_chaine *chaine)
-{
-	int	i;
-	int	tps;
-	int	tps1;
-
-	tps = 0;
-	tps1 = 0;
-	i = chaine->i - 1;
-	while (src[++i] && src[i] != c)
-	{
-		if (src[i] == '-')
-			tps = 1;
-		if (src[i] == '0' && (src[i - 1] < '0' || src[i - 1] > '9'))
-			tps1 = 1;
-		if (src[i] == '#' && (c == 'c' || c == 'd' || c == 'i' || c == 'n'
-				|| c == 'p' || c == 's' || c == 'u' || c == 'x' || c == '%'))
-			return (0);
-		if ((src[i] == '0' || src[i] == ' ' || src[i] == '+') && (c == 'c'
-				|| c == 's' || c == '%'))
-			return (0);
-		if (src[i] == '-' && (c == 'n' || c == '%'))
-			return (0);
-	}
-	if (!src[i] || (tps + tps1) == 2)
-		return (0);
-	return (ft_verif_2(src, c, chaine));
-}
-
-void	ft_c(const char *src, va_list list, t_chaine *chaine)
-{
-	int	i;
 	int	temp;
+	int	i;
 
 	i = chaine->i;
-	if (ft_verif(src, 'c', chaine) == 0)
-		return ;
+	while (src[i] == '-' && src[i + 1] == '-')
+		i++;
 	if (src[i] == '-')
 	{
 		i++;
-		ft_putchar(va_arg(list, int));
-		temp = ft_atoi(src + i) - 1;
-		ft_put_nb_char(temp, ' ');
-		chaine->i += 2 + count_nb(temp);
-		chaine->t += 1 + temp;
+		temp = ft_atoi(src + i);
+		chaine->t += ft_putstr(chaine->dest);
+		chaine->t += ft_put_nb_char(temp - ft_strlen(chaine->dest), ' ');
 	}
 	else
 	{
-		temp = ft_atoi(src + i) - 1;
-		ft_put_nb_char(temp, ' ');
-		ft_putchar(va_arg(list, int));
-		chaine->i += 1 + count_nb(temp);
-		chaine->t += 1 + temp;
+		temp = ft_atoi(src + i);
+		chaine->t += ft_put_nb_char(temp - ft_strlen(chaine->dest), ' ');
+		chaine->t += ft_putstr(chaine->dest);
 	}
 }
 
-void	ft_s(const char *src, va_list list, t_chaine *chaine)
+void	ft_space_c(const char *src, char c, t_chaine *chaine)
 {
-	int	i;
 	int	temp;
+	int	i;
 
 	i = chaine->i;
-	if (ft_verif(src, 's', chaine) == 0)
-		return ;
+	while (src[i] == '-' && src[i + 1] == '-')
+		i++;
 	if (src[i] == '-')
 	{
 		i++;
-		chaine->dest = va_arg(list, char *);
-		ft_putstr(chaine->dest);
-		temp = ft_atoi(src + i) - ft_strlen(chaine->dest);
-		ft_put_nb_char(temp, ' ');
-		chaine->i += 2 + count_nb(temp);
-		chaine->t += ft_strlen(chaine->dest) + temp;
+		temp = ft_atoi(src + i);
+		ft_putchar(c);
+		chaine->t += 1;
+		chaine->t += ft_put_nb_char(temp - 1, ' ');
 	}
 	else
 	{
-		chaine->dest = va_arg(list, char *);
-		temp = ft_atoi(src + i) - ft_strlen(chaine->dest);
-		ft_put_nb_char(temp, ' ');
-		ft_putstr(chaine->dest);
-		chaine->i += 1 + count_nb(temp);
-		chaine->t += ft_strlen(chaine->dest) + temp;
+		temp = ft_atoi(src + i);
+		chaine->t += ft_put_nb_char(temp - 1, ' ');
+		ft_putchar(c);
+		chaine->t += 1;
 	}
 }
 
-void	ft_p(const char *src, va_list list, t_chaine *chaine)
+void	ft_verif(const char *src, char c, t_chaine *chaine)
 {
-	if (ft_verif(src, 'p', chaine) == 0)
-		return ;
-	(void)list;
-}
+	int	i;
 
-void	ft_d(const char *src, va_list list, t_chaine *chaine)
-{
-	if (ft_verif(src, 'd', chaine) == 0)
-		return ;
-	(void)list;
-}
-
-void	ft_i(const char *src, va_list list, t_chaine *chaine)
-{
-	if (ft_verif(src, 'i', chaine) == 0)
-		return ;
-	(void)list;
-}
-
-void	ft_u(const char *src, va_list list, t_chaine *chaine)
-{
-	if (ft_verif(src, 'u', chaine) == 0)
-		return ;
-	(void)list;
-}
-
-void	ft_x(const char *src, va_list list, t_chaine *chaine)
-{
-	if (ft_verif(src, 'x', chaine) == 0)
-		return ;
-	(void)list;
-}
-
-void	ft_xx(const char *src, va_list list, t_chaine *chaine)
-{
-	if (ft_verif(src, 'X', chaine) == 0)
-		return ;
-	(void)list;
-}
-
-void	ft_percent(const char *src, t_chaine *chaine)
-{
-	if (ft_verif(src, '%', chaine) == 0)
-		return ;
-	ft_putchar('%');
-	chaine->t += 1;
-	chaine->t += 1;
+	i = chaine->i;
+	while (src[i] && src[i] != c)
+	{
+		i++;
+		chaine->flag++;
+	}
 }
 
 void	ft_verif_argc(const char *src, va_list list, t_chaine *chaine)
@@ -173,23 +80,23 @@ void	ft_verif_argc(const char *src, va_list list, t_chaine *chaine)
 	while (src[++i])
 	{
 		if (src[i] == 'c')
-			(ft_c(src, list, chaine));
+			return (ft_c(src, list, chaine));
 		if (src[i] == 's')
-			(ft_s(src, list, chaine));
+			return (ft_s(src, list, chaine));
 		if (src[i] == 'p')
-			(ft_p(src, list, chaine));
+			return (ft_p(src, list, chaine));
 		if (src[i] == 'd')
-			(ft_d(src, list, chaine));
+			return (ft_d(src, list, chaine));
 		if (src[i] == 'i')
-			(ft_i(src, list, chaine));
+			return (ft_i(src, list, chaine));
 		if (src[i] == 'u')
-			(ft_u(src, list, chaine));
+			return (ft_u(src, list, chaine));
 		if (src[i] == 'x')
-			(ft_x(src, list, chaine));
+			return (ft_x(src, list, chaine));
 		if (src[i] == 'X')
-			(ft_xx(src, list, chaine));
+			return (ft_xx(src, list, chaine));
 		if (src[i] == '%')
-			(ft_percent(src, chaine));
+			return (ft_percent(src, chaine));
 	}
 }
 
@@ -212,55 +119,30 @@ int	ft_printf(const char *src, ...)
 		{
 			ft_putchar(src[chaine->i]);
 			chaine->i++;
+			chaine->t++;
 		}
 	}
 	va_end(list);
 	return (chaine->t);
 }
+/*#include <limits.h>
 
 int	main(void)
 {
-	char	c;
-	char	*chaine;
-	float	f;
-	int		i;
+	char c;
+	char *chaine;
+	float f;
+	int i;
 
-	c = 'a';
-	chaine = "hello";
+	c = '0';
+	chaine = NULL;
 	f = 3.10;
-	i = 555;
-	(void)i;
+	i = 42;
+	(void)chaine;
 	(void)f;
 	(void)c;
-	(void)chaine;
-	ft_printf("%%", chaine);
-	//printf("%%");
+	(void)i;
+	printf(" % d \n", -1);
+	ft_printf(" % d ", -1);
 	return (0);
-}
-/*int	wft_valeur(const char *src, va_list list, t_chaine *chaine)
-{
-	int			t;
-	int			tmp;
-	t_chaine	chaine[1];
-	va_list		list;
-	t_chaine	chaine[1];
-	t_chaine	chaine[1];
-
-	int itmp
-	t = 0;
-	tmp = 0;
-	itmp = chaine ->i;
-	if (ft_verif_argc(src, chaine) == -1)
-		return (0);
-	
-	if (src[chaine->i] >= '1' && src[chaine->i] <= '9')
-	{
-		tmp = ft_atoi(src + chaine->i);
-		chaine->i += count_nb(tmp);
-	//	chaine->t += count_nb(tmp);
-	//	ft_put_nb_char(tmp, ' ');
-	}
-	if (src[chaine->i] == 'c')
-		ft_putchar(va_arg(list, int));
-	return (t);
 }*/

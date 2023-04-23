@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 14:17:29 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/04/20 19:35:38 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/04/23 19:19:25 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
 void				ft_putchar(char c);
-int					count_nb(int n);
-void				ft_put_nb_char(int i, char c);
-void				ft_putstr(char *chaine);
+int					ft_putstr(char *chaine);
 
 #endif
