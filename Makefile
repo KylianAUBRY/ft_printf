@@ -20,7 +20,7 @@ OBJS =	${SRCS:.c=.o}
 
 CC =	cc
 
-CFLAGS	=	-Wall -Wextra -Werror #-g3 -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -g3 -fsanitize=address
 
 .c.o:
 			$(CC) $(CFLAGS) -c $< -o $(<:.c=.o) -Ilibft
@@ -31,9 +31,9 @@ $(NAME): ${OBJS}
 		
 bonus : $(NAME)
 
-#compile: $(OBJS)
-#		$(MAKE) -C libft
-#		$(CC) $(CFLAGS) -o a.out $(OBJS) libft/libft.a -Ilibft
+compile: $(OBJS)
+		$(MAKE) -C libft
+		$(CC) $(CFLAGS) -o a.out $(OBJS) libft/libft.a -Ilibft
 
 all:	${NAME}
 

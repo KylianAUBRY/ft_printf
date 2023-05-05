@@ -6,7 +6,7 @@
 /*   By: kyaubry <kyaubry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 01:07:29 by kyaubry           #+#    #+#             */
-/*   Updated: 2023/04/24 01:25:53 by kyaubry          ###   ########.fr       */
+/*   Updated: 2023/04/24 14:46:53 by kyaubry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	ft_printf(const char *src, ...)
 	va_end(list);
 	return (chaine->t);
 }
-/*#include <limits.h>
+#include <limits.h>
 
 int	main(void)
 {
@@ -142,7 +142,7 @@ int	main(void)
 	(void)f;
 	(void)c;
 	(void)i;
-	printf(" % d \n", -1);
-	ft_printf(" % d ", -1);
+	//printf(" %p ", -1); 
+	ft_printf(" %p %p ", INT_MIN, INT_MAX); 
 	return (0);
-}*/
+}
