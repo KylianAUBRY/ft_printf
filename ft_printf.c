@@ -125,7 +125,7 @@ int	ft_printf(const char *src, ...)
 	va_end(list);
 	return (chaine->t);
 }
-#include <limits.h>
+/*#include <limits.h>
 
 int	main(void)
 {
@@ -145,4 +145,4 @@ int	main(void)
 	//printf(" %p ", -1); 
 	ft_printf(" %p %p ", INT_MIN, INT_MAX); 
 	return (0);
-}
+}*/
